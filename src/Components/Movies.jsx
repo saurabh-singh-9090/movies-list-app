@@ -3,6 +3,7 @@ import './movies.css';
 import axios from 'axios';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import MovieDetails from './MovieDetails';
+import {debounce} from './utility/debounce'
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -12,6 +13,7 @@ const Movies = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedMovie, setExpandedMovie] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const [inputValue, setInputValue] = useState('');
 
   const API_KEY = process.env.REACT_APP_OMDB_API_KEY?.trim();
 
@@ -67,6 +69,21 @@ const Movies = () => {
     setPage(1);
   };
 
+  const debouncedSetSearchTerm = useCallback(
+    debounce(value => {
+      setSearchTerm(value);
+      setMovies([]); // Clear previous movies on new search
+      setPage(1);    // Reset page to 1
+    }, 300),
+    []
+  );
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);       // Update input value immediately
+    debouncedSetSearchTerm(value); // Debounce the API call
+  };
+
   const toggleMovieDetails = movieId => {
     setExpandedMovie(expandedMovie === movieId ? null : movieId);
   };
@@ -76,8 +93,8 @@ const Movies = () => {
       <input
         type="text"
         placeholder="Search movies..."
-        value={searchTerm}
-        onChange={handleSearch}
+        value={inputValue}
+        onChange={handleInputChange}
         className="search-input"
       />
 
