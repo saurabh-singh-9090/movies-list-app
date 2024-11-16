@@ -5,13 +5,13 @@ const MovieDetails = ({ movieId }) => {
     const [details, setDetails] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const API_KEY = process.env.REACT_APP_OMDB_API_KEY?.trim();
+
     useEffect(() => {
         const fetchMovieDetails = async () => {
             try {
-                const response = await axios.get(
-                    `https://api.themoviedb.org/3/movie/${movieId}`,
-                    { params: { api_key: '85b9d2b600e4cd470c87d6389f2fa8ca' } }
-                );
+                const endpoint = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`;
+                const response = await axios.get(endpoint);
                 setDetails(response.data);
             } catch (error) {
                 console.error('Failed to load movie details:', error);

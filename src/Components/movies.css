@@ -1,4 +1,4 @@
-/* General Reset */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -55,7 +55,6 @@ body {
     border-color: #007bff;
   }
   
-  /* Movie Item */
   .movie-item {
     background-color: #fff;
     margin-bottom: 15px;
@@ -82,7 +81,6 @@ body {
     margin-top: 10px;
     padding: 10px 15px;
     background-color: #f7f7f7;
-    /* border-left: 4px solid #007bff; */
     border-radius: 4px;
   }
   
@@ -107,7 +105,7 @@ body {
     text-align: center;
   }
   
-  /* Responsive Design */
+  /* Responsiveness */
   @media (max-width: 768px) {
     .movie-item {
       padding: 10px;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './movies.css'; // Ensure CSS is imported
+import './movies.css';
 import axios from 'axios';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import icons from react-icons
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import MovieDetails from './MovieDetails';
 
 const Movies = () => {
@@ -13,7 +13,8 @@ const Movies = () => {
   const [expandedMovie, setExpandedMovie] = useState(null);
   const [hasMore, setHasMore] = useState(true);
 
-  const API_KEY = '85b9d2b600e4cd470c87d6389f2fa8ca';
+  const API_KEY = process.env.REACT_APP_OMDB_API_KEY?.trim();
+
   const API_URL = `https://api.themoviedb.org/3`;
 
   const fetchMovies = useCallback(async () => {
@@ -21,17 +22,11 @@ const Movies = () => {
     setError(null);
 
     try {
-      const endpoint = searchTerm
-        ? `${API_URL}/search/movie`
-        : `${API_URL}/discover/movie`;
+        const endpoint = searchTerm
+        ? `${API_URL}/search/movie?api_key=${API_KEY}&query=${searchTerm}&page=${page}`
+        : `${API_URL}/discover/movie?api_key=${API_KEY}&page=${page}`;
 
-      const response = await axios.get(endpoint, {
-        params: {
-          api_key: API_KEY,
-          query: searchTerm,
-          page: page,
-        },
-      });
+      const response = await axios.get(endpoint);
 
       if (response.data.results && response.data.results.length > 0) {
         setMovies(prevMovies => [...prevMovies, ...response.data.results]);
