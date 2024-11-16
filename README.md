@@ -8,6 +8,14 @@
 # Features Implemented
 1. Used TMDB API for fetching movies data list
 2. Added a search bar for searching movies based on their titles. Also, implemented debouncing for reducing the unnecessarily API calls
-3. 
+3. Implemented Infinite scrolling for fetching movies data based on user's scrolling
+4. Fetched movie data will appear as 'Collapsible Movie List'.When a movie item is clicked, it expands to show additional information
+5. Added Error Handling and Loading States
+6. Added comments wherever necessary
+
+# Steps to run locally
+1. git clone https://github.com/saurabh-singh-9090/movies-list-app.git
+2. npm i
+3. npm start
 
 
